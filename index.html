@@ -292,11 +292,37 @@
       font-size: 1rem;
       margin-bottom: 0.3rem;
     }
-    .restaurant-address {
-      font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 0.4rem;
+
+    /* ── SCHOOL SCHEDULE ── */
+    .school-schedule {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
     }
+    .school-schedule-header {
+      background: #2e7d32;
+      color: white;
+      padding: 1rem 1.4rem;
+      font-weight: 900;
+      font-size: 1.05rem;
+    }
+    .school-row {
+      display: flex;
+      gap: 1rem;
+      padding: 0.7rem 1.4rem;
+      border-bottom: 1px solid #f0f0f0;
+      background: white;
+      align-items: flex-start;
+    }
+    .school-row:last-child { border-bottom: none; }
+    .school-time {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #2e7d32;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+    .school-desc { font-size: 0.9rem; }
 
     /* ── SECTION ACCENT COLORS ── */
     #schedule h2 { color: var(--coral); }
@@ -319,6 +345,130 @@
       .quick-info { grid-template-columns: 1fr 1fr; }
       .hero h1 { font-size: 2rem; }
     }
+
+    /* ── CHAT ── */
+    .chat-fab {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--coral);
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255,107,107,0.5);
+      z-index: 200;
+      transition: transform 0.2s;
+    }
+    .chat-fab:hover { transform: scale(1.1); }
+
+    .chat-panel {
+      position: fixed;
+      bottom: 5rem;
+      right: 1.5rem;
+      width: min(380px, calc(100vw - 2rem));
+      height: min(520px, calc(100vh - 8rem));
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+      display: none;
+      flex-direction: column;
+      z-index: 200;
+      overflow: hidden;
+    }
+    .chat-panel.open { display: flex; }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--coral), #ff8e53);
+      color: white;
+      padding: 1rem 1.2rem;
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chat-close {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      padding: 0 0.2rem;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .msg { display: flex; }
+    .msg.user { justify-content: flex-end; }
+    .msg.bot { justify-content: flex-start; }
+
+    .bubble {
+      max-width: 80%;
+      padding: 0.6rem 0.9rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .msg.user .bubble {
+      background: var(--coral);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .msg.bot .bubble {
+      background: #f3f3f3;
+      color: var(--text);
+      border-bottom-left-radius: 4px;
+    }
+    .msg.bot .bubble.typing::after {
+      content: '▋';
+      animation: blink 0.7s step-start infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .chat-input-row {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.8rem;
+      border-top: 1px solid #f0f0f0;
+    }
+    .chat-input-row input {
+      flex: 1;
+      border: 2px solid #eee;
+      border-radius: 50px;
+      padding: 0.5rem 0.9rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .chat-input-row input:focus { border-color: var(--coral); }
+    .chat-input-row button {
+      background: var(--coral);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 0.5rem 1rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+    .chat-input-row button:disabled { opacity: 0.5; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -326,6 +476,7 @@
 <nav>
   <a href="#top">🏠 Home</a>
   <a href="#schedule">📅 Schedule</a>
+  <a href="#school">🏫 School</a>
   <a href="#food">🍽️ Food</a>
   <a href="#bedtime">🌙 Bedtime</a>
   <a href="#bath">🛁 Bath</a>
@@ -389,41 +540,50 @@
             <span class="time">8:30–8:50a</span>
             <span class="event">
               <strong>Drop-off at school</strong>
-              <span class="note">Drop Asher & Lila off. Don't forget their backpacks, bento boxes, ice packs, water bottles, and folders!</span>
+              <span class="note">Drivers: enter parking lot/follow car line and remain in vehicle — staff will bring kids in via Side Door. Walkers: enter via Side Door. Don't forget backpacks, bento boxes, ice packs, water bottles, and folders!</span>
             </span>
           </li>
           <li>
             <span class="time">9:00–9:45a</span>
             <span class="event">
               <strong>🏫 Asher's Visiting Day</strong>
-              <span class="note">Head over to school for Asher's class visit.</span>
             </span>
           </li>
           <li>
             <span class="time">10:00–10:45a</span>
             <span class="event">
               <strong>🏫 Lila's Visiting Day</strong>
-              <span class="note">Possibly combined with Asher's — check with the school!</span>
+              <span class="note">May be combined with Asher's — check with the school!</span>
             </span>
           </li>
           <li>
-            <span class="time">~3:00p</span>
+            <span class="time">3:00–3:10p</span>
             <span class="event">
               <strong>🤸 Pick up Lila for Gymnastics</strong>
-              <span class="note">Gymnastics at 3:30p. Silver Stars Gymnastics — 2701 Pittman Dr, Silver Spring, MD 20910.<br>
-              We'll set aside an outfit for Lila — she can change in the bathroom there. Check in at the front desk; Lila knows the drill and her teachers are super nice! Regular pickup line — they put kids in the car.</span>
+              <span class="note">Full Day Dismissal: follow car line, remain in vehicle — staff brings kids out.<br>
+              <strong>Silver Stars Gymnastics</strong> — 2701 Pittman Dr, Silver Spring, MD 20910.<br>
+              Pittman Dr is like a long alley. Go over 4 speed bumps; Silver Stars will be on your right. Easy parking at this time.<br>
+              Make sure <strong>Lila's hair is tied back!</strong> We'll set out an outfit — she can put her leotard over leggings and change in the bathroom there. Check in at the front desk; Lila knows the drill. Her teacher is <strong>Coach Jeanette</strong> 🤸 — very nice! Very quiet on Friday afternoons.<br>
+              She may ask for a popsicle or vending machine snack after — your call!</span>
             </span>
           </li>
           <li>
-            <span class="time">~5:00p</span>
+            <span class="time">by 5:00p</span>
             <span class="event">
               <strong>🎒 Pick up Asher</strong>
-              <span class="note">Or pick up Asher at 3pm too and bring him along to gymnastics — up to you!</span>
+              <span class="note">Or pick up Asher at 3pm too and bring him along to gymnastics!</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">Evening</span>
+            <span class="event">
+              <strong>🎬 Family Movie Night</strong>
+              <span class="note">We often do this on Fridays — totally up to you!</span>
             </span>
           </li>
         </ul>
-        <div class="tip yellow">🎒 Pack a couple of snacks for pickup!</div>
-        <div class="tip blue">📁 The kids bring folders home on Fridays — it's sweet to go through the artwork with them. And don't forget to bring it back for Monday drop-off!</div>
+        <div class="tip yellow">🍎 Pack a bar + string cheese (usual snack) for each kid at pickup!</div>
+        <div class="tip blue">📁 Kids bring folders home on Fridays — go through the artwork with them. Bring back for Monday drop-off!</div>
       </div>
     </div>
 
@@ -439,21 +599,21 @@
             <span class="time">Morning</span>
             <span class="event">
               <strong>🥞 Pancake Breakfast!</strong>
-              <span class="note">Mix is in the pantry on the left side. A beloved Bergeron tradition.</span>
+              <span class="note">Mix is in the pantry (left side). A beloved Bergeron tradition.</span>
             </span>
           </li>
           <li>
             <span class="time">11:00a</span>
             <span class="event">
               <strong>🚂 Wheaton Eye Spy Train</strong>
-              <span class="note">Their class is going! Purchase tickets in advance. <em>No pressure to go</em> — it's optional but could be a blast.</span>
+              <span class="note">Their class is going! Purchase tickets in advance. <em>Totally optional — no pressure!</em></span>
             </span>
           </li>
           <li>
             <span class="time">Anytime</span>
             <span class="event">
               <strong>📚 Noyes Library for Young Children</strong>
-              <span class="note">10237 Carroll Pl, Kensington, MD 20895. Always a hit.</span>
+              <span class="note">10237 Carroll Pl, Kensington, MD 20895</span>
             </span>
           </li>
           <li>
@@ -464,10 +624,17 @@
             </span>
           </li>
           <li>
-            <span class="time">Backup</span>
+            <span class="time">Anytime</span>
             <span class="event">
-              <strong>🛝 The Park at their school</strong>
-              <span class="note">Always works. We'll also leave out some activities at home!</span>
+              <strong>🛝 Park at their school</strong>
+              <span class="note">Always works! They love scootering and biking. Scooters (with helmets) and Asher's bike with training wheels are in the shed.</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">At home</span>
+            <span class="event">
+              <strong>🎨 Activities</strong>
+              <span class="note">We'll leave out activities (e.g. Kiwi Crates) + they have art supplies galore.</span>
             </span>
           </li>
         </ul>
@@ -486,12 +653,13 @@
             <span class="time">3:30p</span>
             <span class="event">
               <strong>✈️ Tom & Jeannine's flight departs</strong>
-              <span class="note">Coordinate hand-off with Shelley & Noam as needed before then!</span>
+              <span class="note">Coordinate hand-off with Shelley & Noam before then!</span>
             </span>
           </li>
         </ul>
-        <div class="tip pink">🧺 Please wash Lila's Rollee Pollee before the hand-off!</div>
-        <div class="tip blue">📁 Don't forget the art folders — bring them back for Monday drop-off!</div>
+        <div class="tip pink">🧺 Please wash <strong>Lila's Rollee Pollee</strong> and return Monday morning!</div>
+        <div class="tip blue">📁 Don't forget art folders — bring back for Monday drop-off!</div>
+        <div class="tip green">🛴 Park is great if weather allows — scooters + Asher's bike are in the shed!</div>
       </div>
     </div>
 
@@ -504,17 +672,18 @@
         </div>
         <ul class="timeline">
           <li>
-            <span class="time">Morning</span>
+            <span class="time">8:30–8:50a</span>
             <span class="event">
               <strong>🎒 Drop off both kids</strong>
-              <span class="note">Don't forget: art folders + Lila's Rollee Pollee!</span>
+              <span class="note">Don't forget: art folders + Lila's Rollee Pollee! Follow car line and remain in vehicle — staff will assist.</span>
             </span>
           </li>
           <li>
             <span class="time">4:30–4:45p</span>
             <span class="event">
               <strong>🥋 Pick up Asher for Taekwondo</strong>
-              <span class="note">Class starts at 5:10pm. Pack two snacks for each kid!</span>
+              <span class="note">Class starts at 5:10pm. You know the drill — Ash can help too!<br>
+              <strong>Pack:</strong> His taekwondo outfit + gloves are in the <strong>pink drawstring backpack</strong> in the front coat closet. Pack two snacks for each kid.</span>
             </span>
           </li>
         </ul>
@@ -531,7 +700,7 @@
         </div>
         <ul class="timeline">
           <li>
-            <span class="time">Morning</span>
+            <span class="time">8:30–8:50a</span>
             <span class="event">
               <strong>🎒 Shelley drops off both kids</strong>
             </span>
@@ -540,9 +709,13 @@
             <span class="time">By 5:00p</span>
             <span class="event">
               <strong>🚗 Celia picks up Asher & Lila</strong>
+              <span class="note">Bring snacks!<br>
+              ☀️ <strong>If nice out:</strong> They'll be at the playground by school — let the teachers know you're there for them.<br>
+              🌧️ <strong>If raining:</strong> Ring the doorbell at the front of the school; teachers will bring them out.</span>
             </span>
           </li>
         </ul>
+        <div class="tip yellow">🍎 Dinner usually starts 5:30–6pm!</div>
       </div>
     </div>
 
@@ -555,7 +728,7 @@
         </div>
         <ul class="timeline">
           <li>
-            <span class="time">8:30–9:00a</span>
+            <span class="time">8:30–8:50a</span>
             <span class="event">
               <strong>🎒 Celia drops off both kids</strong>
             </span>
@@ -564,13 +737,13 @@
             <span class="time">~3:00p</span>
             <span class="event">
               <strong>✈️ Mom & Dad land!</strong>
-              <span class="note">Assuming flight is on time, aiming for 6pm pickup (late pickup). Worst case — we'll coordinate with neighbors or Shelley.</span>
+              <span class="note">Aiming for 6pm (late pickup). Backup: coordinate with neighbors or Shelley & Noam if needed.</span>
             </span>
           </li>
           <li>
             <span class="time">By 6:00p</span>
             <span class="event">
-              <strong>🎉 Kids reunited with Mom & Dad</strong>
+              <strong>🎉 Kids reunited with Mom & Dad!</strong>
             </span>
           </li>
         </ul>
@@ -579,11 +752,56 @@
 
   </section>
 
+  <!-- SCHOOL SCHEDULE -->
+  <section id="school">
+    <h2>🏫 School Arrival & Dismissal</h2>
+    <p style="font-size:0.85rem;color:#888;font-weight:600;margin-bottom:1rem;">Spring Bilingual Montessori — 3514 Plyers Mill Road</p>
+
+    <div class="school-schedule">
+      <div class="school-schedule-header">📋 2025–2026 Arrival & Dismissal Schedule</div>
+      <div class="school-row">
+        <span class="school-time">Before Care<br>7:30–8:30a</span>
+        <span class="school-desc">Park your car and ring the front doorbell.</span>
+      </div>
+      <div class="school-row">
+        <span class="school-time">Morning Arrival<br>8:30–8:50a</span>
+        <span class="school-desc">
+          <strong>Drivers:</strong> Enter parking lot/follow car line — remain in your vehicle. Staff will assist kids via Side Door.<br>
+          <strong>Walkers:</strong> Enter via Side Door.
+        </span>
+      </div>
+      <div class="school-row">
+        <span class="school-time">Late Arrival<br>After 8:50a</span>
+        <span class="school-desc">Park along the fence and ring the front doorbell for entry.</span>
+      </div>
+      <div class="school-row">
+        <span class="school-time">Half Day<br>12:00p</span>
+        <span class="school-desc">Park your car and pick up via Side Door.</span>
+      </div>
+      <div class="school-row">
+        <span class="school-time">Full Day Dismissal<br>3:00–3:10p</span>
+        <span class="school-desc">
+          <strong>Drivers:</strong> Enter parking lot/follow car line — remain in vehicle. Students brought out by staff.<br>
+          <strong>Walkers:</strong> Released via Side Door.<br>
+          <em>Kids not picked up by 3:10pm are signed into after care.</em>
+        </span>
+      </div>
+      <div class="school-row">
+        <span class="school-time">After Care<br>3:00–6:00p</span>
+        <span class="school-desc">Park and ring the front doorbell. Weather permitting, they'll be outside in the park.</span>
+      </div>
+    </div>
+
+    <div class="tip yellow" style="margin-top:1rem;">🚗 Do NOT drive around other vehicles unless asked by staff. Ensure kids have their lunch/snack and necessities each day!</div>
+    <div class="tip blue" style="margin-top:0.5rem;">🚶 You can walk or drive to/from school, weather and time permitting. Stroller is in the shed if helpful.</div>
+  </section>
+
   <!-- FOOD -->
   <section id="food">
     <h2>🍽️ Food Guide</h2>
 
-    <div class="tip blue">💧 Water cups: <span class="kid-note asher">Asher</span> light purple | <span class="kid-note lila">Lila</span> dark purple. Use water bottles when going out!</div>
+    <div class="tip blue">💧 Water cups: <span class="kid-note asher">Asher</span> light purple | <span class="kid-note lila">Lila</span> dark purple. Use water bottles when going out!<br>
+    🍽️ <strong>Bowls & plates:</strong> In the bottom cabinet to the left of the pantry. They use plastic and stainless steel plates (usually kept near our plates).</div>
 
     <div class="tab-nav" id="food-tabs">
       <button class="tab-btn food-tab-btn active" onclick="showFood('breakfast')">🍳 Breakfast</button>
@@ -599,7 +817,10 @@
         <h3>🍳 Breakfast Options</h3>
         <p style="font-size:0.85rem;color:#888;margin-bottom:0.8rem;">Always serve fruit on the side (apples or whatever's around)!</p>
         <ul class="food-list">
-          <li><strong>Protein Muffins</strong> (in fridge or freezer) — 2–3 per kid. Peel wrapper before microwaving 20–30 sec.</li>
+          <li>
+            <strong>Protein Muffins</strong> (in fridge or freezer) — 2–3 per kid. Peel wrapper before microwaving 20–30 sec.<br>
+            <span class="kid-note asher">Asher</span> tends to like them <em>cold</em> these days
+          </li>
           <li>
             <strong>Cereal</strong> — Granola + Cheerios + Milk<br>
             <span class="kid-note asher">Asher</span> milk in the bowl &nbsp;|&nbsp;
@@ -618,7 +839,7 @@
     <div class="tab-panel" id="food-lunch">
       <div class="card">
         <h3>🎒 School Lunch — Bento Box Packing Guide</h3>
-        <div class="tip yellow">Pack in backpacks: Bento box + ice packs (<span class="kid-note asher">Asher</span> monster trucks 🚛 | <span class="kid-note lila">Lila</span> puppy dogs 🐶) + 2 napkins each + water bottles. Ice packs, napkins, and water bottles are on/near the hooks at the top of the basement stairs.</div>
+        <div class="tip yellow">Pack in backpacks: Bento box + ice packs (<span class="kid-note asher">Asher</span> monster trucks 🚛 | <span class="kid-note lila">Lila</span> puppy dogs 🐶) + 2 napkins each + water bottles. Hanging on hooks at top of basement stairs.</div>
 
         <div class="card-grid" style="margin-top:0.8rem;">
           <div>
@@ -649,12 +870,12 @@
     <div class="tab-panel" id="food-dinner">
       <div class="card">
         <h3>🍝 Dinner Ideas</h3>
-        <div class="tip green">💡 Lately the kids have been eating whatever we eat and doing pretty well with a little cajoling (e.g., on 4/6 they ate cod, couscous with parm, and roasted brussel sprouts!).</div>
+        <div class="tip green">⏰ Dinner usually starts between <strong>5:30–6pm</strong>.</div>
+        <div class="tip blue" style="margin-top:0.5rem;">💡 Lately the kids have been eating whatever the adults eat and doing pretty well with a little cajoling (e.g., cod, couscous with parm, roasted brussel sprouts on 4/6!).</div>
         <ul class="food-list" style="margin-top:0.8rem;">
           <li>
             <strong>Homemade Pizza</strong> — crust in freezer, mozz + pepperoni in middle drawer<br>
-            <span class="kid-note asher">Asher</span> ½ pepperoni &nbsp;|&nbsp; <span class="kid-note lila">Lila</span> cheese only — <em>no sauce for either!</em><br>
-            <small style="color:#888">Or personal frozen pizzas — add pepperoni to Asher's.</small>
+            <span class="kid-note asher">Asher</span> ½ pepperoni &nbsp;|&nbsp; <span class="kid-note lila">Lila</span> cheese only — <em>no sauce for either!</em>
           </li>
           <li>
             <strong>Pasta</strong> (tagliatelle, pappardelle, or spaghetti)<br>
@@ -667,7 +888,7 @@
           <li><strong>Grilled Chicken</strong> (in freezer/fridge)</li>
           <li><strong>Brisket</strong></li>
           <li><strong>Edamame</strong></li>
-          <li><strong>Salmon</strong> — both kids like it cooked with butter/oil, salt & pepper</li>
+          <li><strong>Salmon</strong> — both kids like it with butter/oil, salt & pepper</li>
           <li><strong>Hamburgers</strong> — <span class="kid-note lila">Lila</span> doesn't eat the bun</li>
           <li><strong>Hot Dogs</strong></li>
         </ul>
@@ -681,12 +902,13 @@
           <h3>🍎 Snacks</h3>
           <ul class="food-list">
             <li>Frozen yogurt tubes</li>
-            <li>Protein bars (in pantry)</li>
+            <li>Protein bars in pantry (Z-Bars, Go Macro Bars)</li>
             <li>Dates</li>
-            <li>Nuts (pistachios)</li>
             <li>Cheerios</li>
-            <li>String cheese <span class="kid-note lila">Lila</span></li>
+            <li>String cheese</li>
             <li>Cheetos & Popcorn</li>
+            <li>Yogurt balls <span class="kid-note asher">Asher</span></li>
+            <li>Mandarins</li>
           </ul>
         </div>
         <div class="card">
@@ -728,7 +950,7 @@
       <div class="restaurant-card">
         <div class="restaurant-name">🍕 Ledo Pizza</div>
         <ul class="food-list">
-          <li>½ cheese, ½ pepperoni — <strong>light sauce</strong> (or they'll pick it off!)</li>
+          <li>½ cheese, ½ pepperoni — <strong>light sauce</strong> (or they'll scrape it off!)</li>
         </ul>
       </div>
     </div>
@@ -744,11 +966,9 @@
     <div class="card" style="margin-top:1rem;">
       <ol class="steps">
         <li>Brush teeth, wash face & hands (washcloths in linen closet), use the bathroom</li>
+        <li>Put on PJs — <span class="kid-note lila">Lila</span> likes to pick her own!</li>
         <li>
-          Put on PJs — <span class="kid-note lila">Lila</span> likes to pick her own!
-        </li>
-        <li>
-          <span class="kid-note lila">Lila</span>: Put on a pull-up. Use Aquaphor liberally (it's there if needed). <strong>Use a baby wipe on her before bed and in the morning</strong> to keep things fresh. 🧴 Wipes are in each bathroom — <em>don't flush them!</em>
+          <span class="kid-note lila">Lila</span>: Put on a pull-up. Use Aquaphor liberally. <strong>Use a baby wipe on her before bed and in the morning</strong> to keep things fresh. 🧴 Wipes are in each bathroom — <em>don't flush them!</em>
         </li>
         <li>
           Water bottles to bed — <span class="kid-note asher">Asher</span> on his nightstand, <span class="kid-note lila">Lila</span> in the corner of her crib.
@@ -763,14 +983,14 @@
       <div class="card">
         <h3>💡 Nightlights</h3>
         <ul class="food-list">
-          <li>Both kids have colored lights — auto-turn blue at 6pm and change colors through the night</li>
-          <li><span class="kid-note lila">Lila's</span> room has an egg-shaped reading light — tap twice on/off, long-hold to adjust brightness. Leave it OFF overnight</li>
+          <li>Both kids have colored lights — auto-turn blue at 6pm and change colors through the night (automatic, Dino)</li>
+          <li><span class="kid-note lila">Lila's</span> room: egg-shaped reading light — tap twice on/off, long-hold to adjust brightness. Leave it <strong>OFF</strong> overnight</li>
         </ul>
       </div>
       <div class="card">
         <h3>🔊 White Noise</h3>
         <ul class="food-list">
-          <li><span class="kid-note lila">Lila's</span> room: keep the <strong>second light switch ON</strong> — this powers the white noise + baby monitor</li>
+          <li><span class="kid-note lila">Lila's</span> room: keep the <strong>second light switch ON</strong> — powers the white noise + baby monitor</li>
           <li><span class="kid-note asher">Asher's</span> machine can be left on or manually toggled</li>
           <li>Turn on the white noise machine in the hall too</li>
           <li>Baby monitor (audio only) in Lila's room — plug in overnight, adjust volume as needed</li>
@@ -778,7 +998,7 @@
       </div>
     </div>
 
-    <div class="tip pink" style="margin-top:1rem;">🚿 Both kids need help wiping after pooping. <span class="kid-note lila">Lila</span> also needs help wiping after peeing. Baby wipes in each bathroom — do NOT flush!</div>
+    <div class="tip pink" style="margin-top:1rem;">🚿 Both kids need help wiping after pooping. <span class="kid-note lila">Lila</span> also needs help after peeing. Baby wipes in each bathroom — do NOT flush!</div>
   </section>
 
   <!-- BATH -->
@@ -792,7 +1012,7 @@
         <li>Bath sponges: <span class="kid-note asher">Asher</span> panda 🐼 | <span class="kid-note lila">Lila</span> Santa 🎅</li>
         <li>Use the non-slip mat in the tub</li>
         <li>Shampoo, body wash, conditioner, bubbles (optional), and toys are in there</li>
-        <li>⚠️ <strong>The knob between handheld & bath is really tight</strong> — just heads up!</li>
+        <li>⚠️ <strong>The knob between handheld & bath is really tight</strong> — just a heads up!</li>
         <li>After bath: lotion (pink bottle) + comb their hair — both are in the basket on Lila's dresser</li>
       </ul>
     </div>
@@ -804,9 +1024,19 @@
 
     <div class="card-grid">
       <div class="card">
+        <h3>🍽️ Servingware</h3>
+        <ul class="food-list">
+          <li><strong>Bowls:</strong> bottom cabinet to the left of the pantry</li>
+          <li><strong>Plates:</strong> plastic and stainless steel, kept near our plates</li>
+          <li><span class="kid-note asher">Asher</span> light purple water cup</li>
+          <li><span class="kid-note lila">Lila</span> dark purple water cup + pink straw cup for cereal milk</li>
+          <li>Water bottles for when they go out</li>
+        </ul>
+      </div>
+      <div class="card">
         <h3>🛴 Gear in the Shed</h3>
         <ul class="food-list">
-          <li>Stroller (good if walking to/from school)</li>
+          <li>Stroller (helpful for walks to/from school)</li>
           <li>2 scooters with helmets</li>
           <li>Asher's bike with training wheels</li>
         </ul>
@@ -823,7 +1053,7 @@
       <div class="card">
         <h3>🧺 Laundry Note</h3>
         <ul class="food-list">
-          <li>Please leave the washer door <strong>open</strong> — it smells bad when shut (we're working on it 😅)</li>
+          <li>Leave the washer door <strong>open</strong> — it smells bad when shut (we're working on it 😅)</li>
         </ul>
       </div>
       <div class="card">
@@ -832,6 +1062,13 @@
           <li>Folders come home on Friday — go through the artwork with them!</li>
           <li>Bring folders back for Monday drop-off</li>
           <li>Remember Lila's Rollee Pollee on Monday too!</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🥋 Taekwondo Bag</h3>
+        <ul class="food-list">
+          <li>Asher's taekwondo outfit + gloves are in the <strong>pink drawstring backpack</strong> in the front coat closet</li>
+          <li>Pick up 4:30–4:45pm for 5:10pm class on Mondays</li>
         </ul>
       </div>
     </div>
@@ -868,131 +1105,6 @@
     <button onclick="sendMessage()" id="chatSendBtn">Send</button>
   </div>
 </div>
-
-<style>
-  .chat-fab {
-    position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--coral);
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(255,107,107,0.5);
-    z-index: 200;
-    transition: transform 0.2s;
-  }
-  .chat-fab:hover { transform: scale(1.1); }
-
-  .chat-panel {
-    position: fixed;
-    bottom: 5rem;
-    right: 1.5rem;
-    width: min(380px, calc(100vw - 2rem));
-    height: min(520px, calc(100vh - 8rem));
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
-    display: none;
-    flex-direction: column;
-    z-index: 200;
-    overflow: hidden;
-  }
-  .chat-panel.open { display: flex; }
-
-  .chat-header {
-    background: linear-gradient(135deg, var(--coral), #ff8e53);
-    color: white;
-    padding: 1rem 1.2rem;
-    font-weight: 800;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .chat-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.1rem;
-    cursor: pointer;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 900;
-    padding: 0 0.2rem;
-  }
-
-  .chat-messages {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-  }
-
-  .msg { display: flex; }
-  .msg.user { justify-content: flex-end; }
-  .msg.bot { justify-content: flex-start; }
-
-  .bubble {
-    max-width: 80%;
-    padding: 0.6rem 0.9rem;
-    border-radius: 16px;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  .msg.user .bubble {
-    background: var(--coral);
-    color: white;
-    border-bottom-right-radius: 4px;
-  }
-  .msg.bot .bubble {
-    background: #f3f3f3;
-    color: var(--text);
-    border-bottom-left-radius: 4px;
-  }
-  .msg.bot .bubble.typing::after {
-    content: '▋';
-    animation: blink 0.7s step-start infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  .chat-input-row {
-    display: flex;
-    gap: 0.5rem;
-    padding: 0.8rem;
-    border-top: 1px solid #f0f0f0;
-  }
-  .chat-input-row input {
-    flex: 1;
-    border: 2px solid #eee;
-    border-radius: 50px;
-    padding: 0.5rem 0.9rem;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.9rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .chat-input-row input:focus { border-color: var(--coral); }
-  .chat-input-row button {
-    background: var(--coral);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 0.5rem 1rem;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 800;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-  }
-  .chat-input-row button:disabled { opacity: 0.5; cursor: not-allowed; }
-</style>
 
 <script>
   function showDay(day) {
@@ -1061,6 +1173,15 @@
         body: JSON.stringify({ messages: conversationHistory }),
       });
 
+      if (!response.ok) {
+        botBubble.textContent = 'Something went wrong. Please try again.';
+        botBubble.classList.remove('typing');
+        input.disabled = false;
+        btn.disabled = false;
+        input.focus();
+        return;
+      }
+
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let fullText = '';
@@ -1093,7 +1214,7 @@
       botBubble.classList.remove('typing');
       conversationHistory.push({ role: 'assistant', content: fullText });
     } catch (err) {
-      botBubble.textContent = 'Something went wrong. Make sure the server is running!';
+      botBubble.textContent = 'Could not connect to the server. Make sure it\'s running!';
       botBubble.classList.remove('typing');
     }
 

@@ -111,7 +111,7 @@ Lila's bento:
 - Ledo Pizza: half cheese, half pepperoni, LIGHT sauce
 
 ### Snacks & Treats
-- Frozen yogurt tubes, protein bars (pantry), dates, pistachios, Cheerios, string cheese (Lila), Cheetos, popcorn
+- Frozen yogurt tubes, protein bars in pantry (Z-Bars, Go Macro Bars), dates, Cheerios, string cheese, Cheetos, popcorn, yogurt balls (Asher), mandarins
 - Treats box in small cabinet above the fridge (well stocked after Easter!)
 - Mini ice cream cones in the freezer
 - Feel free to bake together!
@@ -158,6 +158,8 @@ module.exports = async (req, res) => {
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no");
+  res.flushHeaders();
 
   try {
     const stream = client.messages.stream({

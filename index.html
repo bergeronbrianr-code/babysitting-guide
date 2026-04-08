@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asher & Lila's Guide 🌟</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral: #FF6B6B;
+      --sky: #4ECDC4;
+      --sun: #FFE66D;
+      --mint: #A8E6CF;
+      --lavender: #C3B1E1;
+      --peach: #FFD5B8;
+      --bg: #FFFDF7;
+      --text: #2D3436;
+      --card: #FFFFFF;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      padding: 0 1rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    nav a {
+      display: inline-block;
+      padding: 1rem 1.1rem;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.2s;
+    }
+    nav a:hover { border-bottom-color: var(--coral); color: var(--coral); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%);
+      padding: 3rem 1.5rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "⭐🌈🦄🚀🎉";
+      position: absolute;
+      top: 0.5rem; left: 0; right: 0;
+      font-size: 1.5rem;
+      letter-spacing: 1rem;
+      opacity: 0.3;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      color: white;
+      text-shadow: 2px 4px 8px rgba(0,0,0,0.15);
+    }
+    .hero p {
+      color: white;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      opacity: 0.9;
+    }
+    .kids-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .kid-badge {
+      background: white;
+      border-radius: 50px;
+      padding: 0.6rem 1.4rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .kid-badge.asher { color: #3498db; }
+    .kid-badge.lila { color: #e84393; }
+
+    /* ── MAIN LAYOUT ── */
+    main { max-width: 860px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+
+    section { margin-bottom: 3rem; }
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.4rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ── QUICK INFO ── */
+    .quick-info {
+      background: linear-gradient(135deg, var(--lavender), var(--peach));
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .info-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .info-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6; }
+    .info-value { font-weight: 800; font-size: 1rem; }
+
+    /* ── SCHEDULE TABS ── */
+    .tab-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .tab-btn {
+      border: none;
+      background: #eee;
+      border-radius: 50px;
+      padding: 0.45rem 1rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover { background: var(--coral); color: white; }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── DAY CARDS ── */
+    .day-card { border-radius: var(--radius); padding: 1.4rem 1.5rem; background: white; box-shadow: var(--shadow); }
+    .day-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .caretaker-badge {
+      font-size: 0.8rem;
+      font-weight: 800;
+      background: var(--sun);
+      border-radius: 50px;
+      padding: 0.3rem 0.9rem;
+    }
+
+    .timeline { list-style: none; }
+    .timeline li {
+      display: flex;
+      gap: 1rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px dashed #f0f0f0;
+      align-items: flex-start;
+    }
+    .timeline li:last-child { border-bottom: none; }
+    .timeline .time {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--coral);
+      min-width: 75px;
+      padding-top: 0.05rem;
+    }
+    .timeline .event { font-size: 0.95rem; }
+    .timeline .event strong { font-weight: 800; }
+    .timeline .event .note {
+      display: block;
+      font-size: 0.82rem;
+      color: #888;
+      margin-top: 0.1rem;
+    }
+
+    /* ── FOOD TABS ── */
+    .food-tab-btn.active, .food-tab-btn:hover { background: var(--sky); color: white; }
+
+    /* ── FOOD ITEMS ── */
+    .food-list { list-style: none; }
+    .food-list li {
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed #f0f0f0;
+      font-size: 0.95rem;
+    }
+    .food-list li:last-child { border-bottom: none; }
+    .food-list li::before { content: "• "; color: var(--sky); font-weight: 900; }
+
+    .kid-note {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      border-radius: 50px;
+      padding: 0.1rem 0.5rem;
+      margin-right: 0.3rem;
+    }
+    .kid-note.asher { background: #dbeeff; color: #3498db; }
+    .kid-note.lila { background: #ffe0f0; color: #e84393; }
+
+    /* ── BEDTIME ── */
+    .steps { list-style: none; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px dashed #f0f0f0;
+      align-items: flex-start;
+    }
+    .steps li:last-child { border-bottom: none; }
+    .steps li::before {
+      content: counter(step);
+      background: var(--lavender);
+      color: white;
+      font-weight: 900;
+      font-size: 0.85rem;
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── ALERT BOXES ── */
+    .tip {
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      margin: 0.8rem 0;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .tip.yellow { background: #FFF9E0; border-left: 4px solid var(--sun); }
+    .tip.blue { background: #E0F7F5; border-left: 4px solid var(--sky); }
+    .tip.pink { background: #FFE8F3; border-left: 4px solid #FF99CC; }
+    .tip.green { background: #E8F8EF; border-left: 4px solid var(--mint); }
+
+    /* ── RESTAURANT CARDS ── */
+    .restaurant-card {
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      background: white;
+      box-shadow: var(--shadow);
+      margin-bottom: 0.8rem;
+    }
+    .restaurant-name {
+      font-weight: 900;
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+    }
+    .restaurant-address {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.4rem;
+    }
+
+    /* ── SECTION ACCENT COLORS ── */
+    #schedule h2 { color: var(--coral); }
+    #food h2 { color: #00b5a8; }
+    #bedtime h2 { color: #9b59b6; }
+    #bath h2 { color: #3498db; }
+    #info h2 { color: #e67e22; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.85rem;
+      color: #aaa;
+      font-weight: 600;
+    }
+    footer span { color: var(--coral); }
+
+    @media (max-width: 500px) {
+      .quick-info { grid-template-columns: 1fr 1fr; }
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#top">🏠 Home</a>
+  <a href="#schedule">📅 Schedule</a>
+  <a href="#food">🍽️ Food</a>
+  <a href="#bedtime">🌙 Bedtime</a>
+  <a href="#bath">🛁 Bath</a>
+  <a href="#info">ℹ️ Info</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <h1>Asher & Lila's Guide 🌟</h1>
+  <p>Everything you need for a great week!</p>
+  <div class="kids-row">
+    <div class="kid-badge asher">🚂 Asher, 5</div>
+    <div class="kid-badge lila">🩷 Lila, 3</div>
+  </div>
+</div>
+
+<main>
+
+  <!-- QUICK INFO -->
+  <div class="quick-info">
+    <div class="info-item">
+      <span class="info-label">📶 WiFi Network</span>
+      <span class="info-value">TheBergeron's</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">🔑 WiFi Password</span>
+      <span class="info-value">Gucci123</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">👩 Natalie Taylor</span>
+      <span class="info-value">(410) 746-9580</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">👨 Dave Taylor</span>
+      <span class="info-value">(240) 678-5682</span>
+    </div>
+  </div>
+
+  <!-- SCHEDULE -->
+  <section id="schedule">
+    <h2>📅 The Schedule</h2>
+
+    <div class="tab-nav" id="day-tabs">
+      <button class="tab-btn active" onclick="showDay('fri')">Friday</button>
+      <button class="tab-btn" onclick="showDay('sat')">Saturday</button>
+      <button class="tab-btn" onclick="showDay('sun')">Sunday</button>
+      <button class="tab-btn" onclick="showDay('mon')">Monday</button>
+      <button class="tab-btn" onclick="showDay('tue')">Tuesday</button>
+      <button class="tab-btn" onclick="showDay('wed')">Wednesday</button>
+    </div>
+
+    <!-- FRIDAY -->
+    <div class="tab-panel active" id="day-fri">
+      <div class="day-card">
+        <div class="day-header">
+          <h3>🌅 Friday</h3>
+          <span class="caretaker-badge">👴👵 Tom & Jeannine</span>
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="time">8:30–8:50a</span>
+            <span class="event">
+              <strong>Drop-off at school</strong>
+              <span class="note">Drop Asher & Lila off. Don't forget their backpacks, bento boxes, ice packs, water bottles, and folders!</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">9:00–9:45a</span>
+            <span class="event">
+              <strong>🏫 Asher's Visiting Day</strong>
+              <span class="note">Head over to school for Asher's class visit.</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">10:00–10:45a</span>
+            <span class="event">
+              <strong>🏫 Lila's Visiting Day</strong>
+              <span class="note">Possibly combined with Asher's — check with the school!</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">~3:00p</span>
+            <span class="event">
+              <strong>🤸 Pick up Lila for Gymnastics</strong>
+              <span class="note">Gymnastics at 3:30p. Silver Stars Gymnastics — 2701 Pittman Dr, Silver Spring, MD 20910.<br>
+              We'll set aside an outfit for Lila — she can change in the bathroom there. Check in at the front desk; Lila knows the drill and her teachers are super nice! Regular pickup line — they put kids in the car.</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">~5:00p</span>
+            <span class="event">
+              <strong>🎒 Pick up Asher</strong>
+              <span class="note">Or pick up Asher at 3pm too and bring him along to gymnastics — up to you!</span>
+            </span>
+          </li>
+        </ul>
+        <div class="tip yellow">🎒 Pack a couple of snacks for pickup!</div>
+        <div class="tip blue">📁 The kids bring folders home on Fridays — it's sweet to go through the artwork with them. And don't forget to bring it back for Monday drop-off!</div>
+      </div>
+    </div>
+
+    <!-- SATURDAY -->
+    <div class="tab-panel" id="day-sat">
+      <div class="day-card">
+        <div class="day-header">
+          <h3>🥞 Saturday</h3>
+          <span class="caretaker-badge">👴👵 Tom & Jeannine</span>
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="time">Morning</span>
+            <span class="event">
+              <strong>🥞 Pancake Breakfast!</strong>
+              <span class="note">Mix is in the pantry on the left side. A beloved Bergeron tradition.</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">11:00a</span>
+            <span class="event">
+              <strong>🚂 Wheaton Eye Spy Train</strong>
+              <span class="note">Their class is going! Purchase tickets in advance. <em>No pressure to go</em> — it's optional but could be a blast.</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">Anytime</span>
+            <span class="event">
+              <strong>📚 Noyes Library for Young Children</strong>
+              <span class="note">10237 Carroll Pl, Kensington, MD 20895. Always a hit.</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">2:30–4:30p</span>
+            <span class="event">
+              <strong>🧱 Lego Free Play</strong>
+              <span class="note">Twinbrook Library — 202 Meadow Hall Dr, Rockville, MD 20851. We haven't been but Asher would probably love it!</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">Backup</span>
+            <span class="event">
+              <strong>🛝 The Park at their school</strong>
+              <span class="note">Always works. We'll also leave out some activities at home!</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SUNDAY -->
+    <div class="tab-panel" id="day-sun">
+      <div class="day-card">
+        <div class="day-header">
+          <h3>✈️ Sunday — Hand-off Day</h3>
+          <span class="caretaker-badge">👴👵 → 🏠 Shelley & Noam</span>
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="time">3:30p</span>
+            <span class="event">
+              <strong>✈️ Tom & Jeannine's flight departs</strong>
+              <span class="note">Coordinate hand-off with Shelley & Noam as needed before then!</span>
+            </span>
+          </li>
+        </ul>
+        <div class="tip pink">🧺 Please wash Lila's Rollee Pollee before the hand-off!</div>
+        <div class="tip blue">📁 Don't forget the art folders — bring them back for Monday drop-off!</div>
+      </div>
+    </div>
+
+    <!-- MONDAY -->
+    <div class="tab-panel" id="day-mon">
+      <div class="day-card">
+        <div class="day-header">
+          <h3>🥋 Monday</h3>
+          <span class="caretaker-badge">🏠 Shelley & Noam</span>
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="time">Morning</span>
+            <span class="event">
+              <strong>🎒 Drop off both kids</strong>
+              <span class="note">Don't forget: art folders + Lila's Rollee Pollee!</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">4:30–4:45p</span>
+            <span class="event">
+              <strong>🥋 Pick up Asher for Taekwondo</strong>
+              <span class="note">Class starts at 5:10pm. Pack two snacks for each kid!</span>
+            </span>
+          </li>
+        </ul>
+        <div class="tip yellow">🥊 Two snacks for each kid for pickup!</div>
+      </div>
+    </div>
+
+    <!-- TUESDAY -->
+    <div class="tab-panel" id="day-tue">
+      <div class="day-card">
+        <div class="day-header">
+          <h3>📦 Tuesday — Hand-off Day</h3>
+          <span class="caretaker-badge">🏠 Shelley & Noam → Celia</span>
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="time">Morning</span>
+            <span class="event">
+              <strong>🎒 Shelley drops off both kids</strong>
+            </span>
+          </li>
+          <li>
+            <span class="time">By 5:00p</span>
+            <span class="event">
+              <strong>🚗 Celia picks up Asher & Lila</strong>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- WEDNESDAY -->
+    <div class="tab-panel" id="day-wed">
+      <div class="day-card">
+        <div class="day-header">
+          <h3>🏡 Wednesday — Welcome Home!</h3>
+          <span class="caretaker-badge">Celia → Mom & Dad 🎉</span>
+        </div>
+        <ul class="timeline">
+          <li>
+            <span class="time">8:30–9:00a</span>
+            <span class="event">
+              <strong>🎒 Celia drops off both kids</strong>
+            </span>
+          </li>
+          <li>
+            <span class="time">~3:00p</span>
+            <span class="event">
+              <strong>✈️ Mom & Dad land!</strong>
+              <span class="note">Assuming flight is on time, aiming for 6pm pickup (late pickup). Worst case — we'll coordinate with neighbors or Shelley.</span>
+            </span>
+          </li>
+          <li>
+            <span class="time">By 6:00p</span>
+            <span class="event">
+              <strong>🎉 Kids reunited with Mom & Dad</strong>
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FOOD -->
+  <section id="food">
+    <h2>🍽️ Food Guide</h2>
+
+    <div class="tip blue">💧 Water cups: <span class="kid-note asher">Asher</span> light purple | <span class="kid-note lila">Lila</span> dark purple. Use water bottles when going out!</div>
+
+    <div class="tab-nav" id="food-tabs">
+      <button class="tab-btn food-tab-btn active" onclick="showFood('breakfast')">🍳 Breakfast</button>
+      <button class="tab-btn food-tab-btn" onclick="showFood('lunch')">🥪 Lunch</button>
+      <button class="tab-btn food-tab-btn" onclick="showFood('dinner')">🍝 Dinner</button>
+      <button class="tab-btn food-tab-btn" onclick="showFood('snacks')">🍎 Snacks</button>
+      <button class="tab-btn food-tab-btn" onclick="showFood('restaurants')">🍕 Restaurants</button>
+    </div>
+
+    <!-- BREAKFAST -->
+    <div class="tab-panel active" id="food-breakfast">
+      <div class="card">
+        <h3>🍳 Breakfast Options</h3>
+        <p style="font-size:0.85rem;color:#888;margin-bottom:0.8rem;">Always serve fruit on the side (apples or whatever's around)!</p>
+        <ul class="food-list">
+          <li><strong>Protein Muffins</strong> (in fridge or freezer) — 2–3 per kid. Peel wrapper before microwaving 20–30 sec.</li>
+          <li>
+            <strong>Cereal</strong> — Granola + Cheerios + Milk<br>
+            <span class="kid-note asher">Asher</span> milk in the bowl &nbsp;|&nbsp;
+            <span class="kid-note lila">Lila</span> cereal dry, milk in her pink straw cup on the side
+          </li>
+          <li><strong>Cheesy Scrambled Eggs</strong> + toast or croissants (croissants in freezer)</li>
+          <li><strong>Pancakes</strong> — mix in pantry, left side</li>
+          <li><strong>Oatmeal</strong> with brown sugar or chocolate chips</li>
+          <li><strong>Smoked Salmon</strong> (in freezer)</li>
+          <li><strong>Bacon</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- LUNCH -->
+    <div class="tab-panel" id="food-lunch">
+      <div class="card">
+        <h3>🎒 School Lunch — Bento Box Packing Guide</h3>
+        <div class="tip yellow">Pack in backpacks: Bento box + ice packs (<span class="kid-note asher">Asher</span> monster trucks 🚛 | <span class="kid-note lila">Lila</span> puppy dogs 🐶) + 2 napkins each + water bottles. Ice packs, napkins, and water bottles are on/near the hooks at the top of the basement stairs.</div>
+
+        <div class="card-grid" style="margin-top:0.8rem;">
+          <div>
+            <h3 style="color:#3498db">🚂 Asher's Bento</h3>
+            <ul class="food-list">
+              <li><strong>Sandwich:</strong> Peanut butter + honey on bread, crust cut off (honey is in cabinet above Cheerios)</li>
+              <li><strong>Fruit:</strong> Anything except bananas</li>
+              <li><strong>Veggie:</strong> Baby carrots or mini cucumber</li>
+              <li><strong>Side:</strong> Pistachios, salty cashews, or cheese</li>
+              <li><strong>Snack slot:</strong> Cheddar bunnies, teddy grahams, or small treat</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="color:#e84393">🩷 Lila's Bento</h3>
+            <ul class="food-list">
+              <li><strong>Sandwich:</strong> Peanut butter + jelly on a rice cracker, cut in half (rice crackers are with the Cheerios)</li>
+              <li><strong>Fruit:</strong> Anything except bananas</li>
+              <li><strong>Veggie:</strong> Baby carrots or mini cucumber</li>
+              <li><strong>Side:</strong> Cheese</li>
+              <li><strong>Snack slot:</strong> Cheddar bunnies, teddy grahams, or small treat</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DINNER -->
+    <div class="tab-panel" id="food-dinner">
+      <div class="card">
+        <h3>🍝 Dinner Ideas</h3>
+        <div class="tip green">💡 Lately the kids have been eating whatever we eat and doing pretty well with a little cajoling (e.g., on 4/6 they ate cod, couscous with parm, and roasted brussel sprouts!).</div>
+        <ul class="food-list" style="margin-top:0.8rem;">
+          <li>
+            <strong>Homemade Pizza</strong> — crust in freezer, mozz + pepperoni in middle drawer<br>
+            <span class="kid-note asher">Asher</span> ½ pepperoni &nbsp;|&nbsp; <span class="kid-note lila">Lila</span> cheese only — <em>no sauce for either!</em><br>
+            <small style="color:#888">Or personal frozen pizzas — add pepperoni to Asher's.</small>
+          </li>
+          <li>
+            <strong>Pasta</strong> (tagliatelle, pappardelle, or spaghetti)<br>
+            <span class="kid-note asher">Asher</span> butter + salt + parmesan (he loves to add the parm himself 🧀)<br>
+            <span class="kid-note lila">Lila</span> butter + salt — call it <em>PLAIN</em> — parm on the side
+          </li>
+          <li><strong>Mac & Cheese</strong> — <span class="kid-note asher">Asher</span> loves it | <span class="kid-note lila">Lila</span> save some plain pasta without sauce</li>
+          <li><strong>Hardboiled Eggs</strong></li>
+          <li><strong>Bean & Cheese Quesadillas</strong> or Nachos</li>
+          <li><strong>Grilled Chicken</strong> (in freezer/fridge)</li>
+          <li><strong>Brisket</strong></li>
+          <li><strong>Edamame</strong></li>
+          <li><strong>Salmon</strong> — both kids like it cooked with butter/oil, salt & pepper</li>
+          <li><strong>Hamburgers</strong> — <span class="kid-note lila">Lila</span> doesn't eat the bun</li>
+          <li><strong>Hot Dogs</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SNACKS -->
+    <div class="tab-panel" id="food-snacks">
+      <div class="card-grid">
+        <div class="card">
+          <h3>🍎 Snacks</h3>
+          <ul class="food-list">
+            <li>Frozen yogurt tubes</li>
+            <li>Protein bars (in pantry)</li>
+            <li>Dates</li>
+            <li>Nuts (pistachios)</li>
+            <li>Cheerios</li>
+            <li>String cheese <span class="kid-note lila">Lila</span></li>
+            <li>Cheetos & Popcorn</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🍬 Treats & Dessert</h3>
+          <ul class="food-list">
+            <li>Box of treats in the small cabinet <strong>above the fridge</strong> — well stocked post-Easter!</li>
+            <li>Individual Easter egg hunt bags of sweets</li>
+            <li>Mini ice cream cones in the freezer 🍦</li>
+            <li>Feel free to bake together!</li>
+          </ul>
+          <div class="tip yellow" style="margin-top:0.8rem;">🍪 Lean on treats as much as you need — no judgment!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESTAURANTS -->
+    <div class="tab-panel" id="food-restaurants">
+      <div class="restaurant-card">
+        <div class="restaurant-name">🥙 Moby Dick</div>
+        <ul class="food-list">
+          <li><span class="kid-note asher">Asher</span> Joojeh kabob (side)</li>
+          <li><span class="kid-note lila">Lila</span> Kubideh kabob (side)</li>
+        </ul>
+      </div>
+      <div class="restaurant-card">
+        <div class="restaurant-name">🍝 Dish and Dram</div>
+        <ul class="food-list">
+          <li><span class="kid-note asher">Asher</span> Pasta with parmesan + butter, side of grilled chicken</li>
+          <li><span class="kid-note lila">Lila</span> Kids jumbo hot dog or burger with fries</li>
+        </ul>
+        <div class="tip yellow" style="margin-top:0.5rem; font-size:0.85rem;">📞 Kids menu may not show online — you may need to call to order!</div>
+      </div>
+      <div class="restaurant-card">
+        <div class="restaurant-name">🍗 Crisp & Juicy</div>
+        <ul class="food-list">
+          <li>Both kids: white meat — ¼ chicken works (more = leftovers!)</li>
+        </ul>
+      </div>
+      <div class="restaurant-card">
+        <div class="restaurant-name">🍕 Ledo Pizza</div>
+        <ul class="food-list">
+          <li>½ cheese, ½ pepperoni — <strong>light sauce</strong> (or they'll pick it off!)</li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- BEDTIME -->
+  <section id="bedtime">
+    <h2>🌙 Bedtime Routine</h2>
+
+    <div class="tip blue">⏰ Goal: 7:45–8pm in bed. Start at <strong>7pm</strong> on non-bath nights, <strong>6:40pm</strong> on bath nights. Weekend? A little later is totally fine!</div>
+
+    <div class="card" style="margin-top:1rem;">
+      <ol class="steps">
+        <li>Brush teeth, wash face & hands (washcloths in linen closet), use the bathroom</li>
+        <li>
+          Put on PJs — <span class="kid-note lila">Lila</span> likes to pick her own!
+        </li>
+        <li>
+          <span class="kid-note lila">Lila</span>: Put on a pull-up. Use Aquaphor liberally (it's there if needed). <strong>Use a baby wipe on her before bed and in the morning</strong> to keep things fresh. 🧴 Wipes are in each bathroom — <em>don't flush them!</em>
+        </li>
+        <li>
+          Water bottles to bed — <span class="kid-note asher">Asher</span> on his nightstand, <span class="kid-note lila">Lila</span> in the corner of her crib.
+        </li>
+        <li>
+          📚 Read ~2 books: each kid picks one. Read all together in Asher's bed, your bed, or the guest bed — all good!
+        </li>
+      </ol>
+    </div>
+
+    <div class="card-grid" style="margin-top:1rem;">
+      <div class="card">
+        <h3>💡 Nightlights</h3>
+        <ul class="food-list">
+          <li>Both kids have colored lights — auto-turn blue at 6pm and change colors through the night</li>
+          <li><span class="kid-note lila">Lila's</span> room has an egg-shaped reading light — tap twice on/off, long-hold to adjust brightness. Leave it OFF overnight</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔊 White Noise</h3>
+        <ul class="food-list">
+          <li><span class="kid-note lila">Lila's</span> room: keep the <strong>second light switch ON</strong> — this powers the white noise + baby monitor</li>
+          <li><span class="kid-note asher">Asher's</span> machine can be left on or manually toggled</li>
+          <li>Turn on the white noise machine in the hall too</li>
+          <li>Baby monitor (audio only) in Lila's room — plug in overnight, adjust volume as needed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip pink" style="margin-top:1rem;">🚿 Both kids need help wiping after pooping. <span class="kid-note lila">Lila</span> also needs help wiping after peeing. Baby wipes in each bathroom — do NOT flush!</div>
+  </section>
+
+  <!-- BATH -->
+  <section id="bath">
+    <h2>🛁 Bath Time</h2>
+
+    <div class="card">
+      <ul class="food-list">
+        <li>They bathe in <strong>our bathtub</strong> (not their own)</li>
+        <li>Towels in their bathroom: <span class="kid-note asher">Asher</span> dark towel | <span class="kid-note lila">Lila</span> light towel. Washcloths in the linen closet.</li>
+        <li>Bath sponges: <span class="kid-note asher">Asher</span> panda 🐼 | <span class="kid-note lila">Lila</span> Santa 🎅</li>
+        <li>Use the non-slip mat in the tub</li>
+        <li>Shampoo, body wash, conditioner, bubbles (optional), and toys are in there</li>
+        <li>⚠️ <strong>The knob between handheld & bath is really tight</strong> — just heads up!</li>
+        <li>After bath: lotion (pink bottle) + comb their hair — both are in the basket on Lila's dresser</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <section id="info">
+    <h2>ℹ️ Good to Know</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>🛴 Gear in the Shed</h3>
+        <ul class="food-list">
+          <li>Stroller (good if walking to/from school)</li>
+          <li>2 scooters with helmets</li>
+          <li>Asher's bike with training wheels</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🩹 First Aid</h3>
+        <ul class="food-list">
+          <li>All in the linen closet (next to washcloths)</li>
+          <li>Band-aids, ear thermometer</li>
+          <li>Tylenol, Motrin, Benadryl</li>
+          <li>Nail clippers</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🧺 Laundry Note</h3>
+        <ul class="food-list">
+          <li>Please leave the washer door <strong>open</strong> — it smells bad when shut (we're working on it 😅)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🏫 School Reminders</h3>
+        <ul class="food-list">
+          <li>Folders come home on Friday — go through the artwork with them!</li>
+          <li>Bring folders back for Monday drop-off</li>
+          <li>Remember Lila's Rollee Pollee on Monday too!</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Made with <span>♥</span> for Asher & Lila's awesome grandparents
+</footer>
+
+<!-- CHAT WIDGET -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()" title="Ask a question!">
+  💬
+</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <span>🌟 Ask about the guide</span>
+    <button onclick="toggleChat()" class="chat-close">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="msg bot">
+      <div class="bubble">Hi! I know everything in Asher & Lila's guide. Ask me anything! 👋</div>
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <input
+      type="text"
+      id="chatInput"
+      placeholder="e.g. What does Lila eat for lunch?"
+      onkeydown="if(event.key==='Enter')sendMessage()"
+    />
+    <button onclick="sendMessage()" id="chatSendBtn">Send</button>
+  </div>
+</div>
+
+<style>
+  .chat-fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--coral);
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(255,107,107,0.5);
+    z-index: 200;
+    transition: transform 0.2s;
+  }
+  .chat-fab:hover { transform: scale(1.1); }
+
+  .chat-panel {
+    position: fixed;
+    bottom: 5rem;
+    right: 1.5rem;
+    width: min(380px, calc(100vw - 2rem));
+    height: min(520px, calc(100vh - 8rem));
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    z-index: 200;
+    overflow: hidden;
+  }
+  .chat-panel.open { display: flex; }
+
+  .chat-header {
+    background: linear-gradient(135deg, var(--coral), #ff8e53);
+    color: white;
+    padding: 1rem 1.2rem;
+    font-weight: 800;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .chat-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    padding: 0 0.2rem;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .msg { display: flex; }
+  .msg.user { justify-content: flex-end; }
+  .msg.bot { justify-content: flex-start; }
+
+  .bubble {
+    max-width: 80%;
+    padding: 0.6rem 0.9rem;
+    border-radius: 16px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .msg.user .bubble {
+    background: var(--coral);
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+  .msg.bot .bubble {
+    background: #f3f3f3;
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+  }
+  .msg.bot .bubble.typing::after {
+    content: '▋';
+    animation: blink 0.7s step-start infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .chat-input-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.8rem;
+    border-top: 1px solid #f0f0f0;
+  }
+  .chat-input-row input {
+    flex: 1;
+    border: 2px solid #eee;
+    border-radius: 50px;
+    padding: 0.5rem 0.9rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input-row input:focus { border-color: var(--coral); }
+  .chat-input-row button {
+    background: var(--coral);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+  }
+  .chat-input-row button:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+
+<script>
+  function showDay(day) {
+    document.querySelectorAll('#day-tabs .tab-btn').forEach((btn, i) => {
+      const days = ['fri','sat','sun','mon','tue','wed'];
+      btn.classList.toggle('active', days[i] === day);
+    });
+    document.querySelectorAll('[id^="day-"]').forEach(el => {
+      el.classList.toggle('active', el.id === 'day-' + day);
+    });
+  }
+
+  function showFood(section) {
+    document.querySelectorAll('#food-tabs .tab-btn').forEach((btn, i) => {
+      const sections = ['breakfast','lunch','dinner','snacks','restaurants'];
+      btn.classList.toggle('active', sections[i] === section);
+    });
+    document.querySelectorAll('[id^="food-"]').forEach(el => {
+      el.classList.toggle('active', el.id === 'food-' + section);
+    });
+  }
+
+  // --- CHAT ---
+  const conversationHistory = [];
+
+  function toggleChat() {
+    const panel = document.getElementById('chatPanel');
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open')) {
+      document.getElementById('chatInput').focus();
+    }
+  }
+
+  function appendMessage(role, text, streaming) {
+    const messages = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.className = `msg ${role}`;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble' + (streaming ? ' typing' : '');
+    bubble.textContent = text;
+    div.appendChild(bubble);
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return bubble;
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const btn = document.getElementById('chatSendBtn');
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = '';
+    input.disabled = true;
+    btn.disabled = true;
+
+    appendMessage('user', text);
+    conversationHistory.push({ role: 'user', content: text });
+
+    const botBubble = appendMessage('bot', '', true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: conversationHistory }),
+      });
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let fullText = '';
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const data = line.slice(6);
+          if (data === '[DONE]') break;
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.text) {
+              fullText += parsed.text;
+              botBubble.textContent = fullText;
+              document.getElementById('chatMessages').scrollTop = 99999;
+            }
+            if (parsed.error) {
+              botBubble.textContent = parsed.error;
+            }
+          } catch {}
+        }
+      }
+
+      botBubble.classList.remove('typing');
+      conversationHistory.push({ role: 'assistant', content: fullText });
+    } catch (err) {
+      botBubble.textContent = 'Something went wrong. Make sure the server is running!';
+      botBubble.classList.remove('typing');
+    }
+
+    input.disabled = false;
+    btn.disabled = false;
+    input.focus();
+  }
+</script>
+
+</body>
+</html>

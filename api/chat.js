@@ -1,6 +1,7 @@
-const Anthropic = require("@anthropic-ai/sdk");
+const AnthropicModule = require("@anthropic-ai/sdk");
+const Anthropic = AnthropicModule.default ?? AnthropicModule;
 
-const client = new Anthropic.default({ apiKey: process.env.ANTHROPIC_API_KEY });
+const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 const GUIDE_SYSTEM_PROMPT = `You are a friendly and helpful assistant for Asher and Lila's babysitting guide. You know everything in the guide and answer questions clearly and concisely. Be warm and encouraging — the caregivers are family!
 

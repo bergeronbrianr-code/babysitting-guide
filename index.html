@@ -1173,7 +1173,7 @@
         body: JSON.stringify({ messages: conversationHistory }),
       });
 
-      const data = await response.json();
+      const data = await response.json().catch(() => ({ error: `Server error (${response.status})` }));
 
       if (data.error) {
         botBubble.textContent = data.error;
@@ -1184,7 +1184,7 @@
       botBubble.classList.remove('typing');
       document.getElementById('chatMessages').scrollTop = 99999;
     } catch (err) {
-      botBubble.textContent = 'Could not connect. Please try again.';
+      botBubble.textContent = 'Could not connect: ' + err.message;
       botBubble.classList.remove('typing');
     }
 
